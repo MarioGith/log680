@@ -1,16 +1,16 @@
 ---
-name: Feature Request
-about: Demande pour répondre à un besoin (fonctionnalité, test, documentation, ...)
+name: Feature
+about: Demande pour répondre à un besoin
 title: "[FEATURE] - "
-labels: enhancement
+labels: ''
 assignees: ''
 
 ---
 
-## Description du besoin ou de l'idée
+## Description de la fonctionnalité
 
 ## Niveau de priorité (critique, important, ou utile)
-Niveau 
+Niveau ...
 
 ## Exigences et contraintes (optionnel)
 

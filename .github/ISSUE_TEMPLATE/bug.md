@@ -1,5 +1,5 @@
 ---
-name: Bug Fix
+name: Bug
 about: Demande de résolution d'un bug ou d'un problème
 title: "[BUG] - "
 labels: bug
