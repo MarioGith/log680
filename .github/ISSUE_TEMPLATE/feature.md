@@ -2,7 +2,7 @@
 name: Feature
 about: Demande pour répondre à un besoin
 title: "[FEATURE] - "
-labels: ''
+labels: feature
 assignees: ''
 
 ---
