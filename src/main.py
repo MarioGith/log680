@@ -11,7 +11,7 @@ class Main:
         self._hub_connection = None
         self.HOST = "http://34.95.34.5"  # Setup your host here
         self.TOKEN = "6M6c4zsXmt"  # Setup your token here
-        self.TICKETS = None  # Setup your tickets here
+        self.TICKETS = 3  # Setup your tickets here
         self.T_MAX = 50  # Setup your max temperature here
         self.T_MIN = 0  # Setup your min temperature here
         self.DATABASE = None  # Setup your database here
