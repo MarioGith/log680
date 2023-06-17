@@ -3,17 +3,21 @@ import logging
 import requests
 import json
 import time
+import os
+from dotenv import load_dotenv
 
 
 class Main:
     def __init__(self):
+        load_dotenv()  # This loads the variables from .env
         self._hub_connection = None
-        self.HOST = None  # Setup your host here
-        self.TOKEN = None  # Setup your token here
-        self.TICKETS = None  # Setup your tickets here
-        self.T_MAX = None  # Setup your max temperature here
-        self.T_MIN = None  # Setup your min temperature here
-        self.DATABASE = None  # Setup your database here
+        self.HOST = os.environ.get("HOST")
+        self.TOKEN = os.environ.get("TOKEN")
+        self.TICKETS = int(os.environ.get("TICKETS"))
+        self.T_MAX = int(os.environ.get("T_MAX"))
+        self.T_MIN = int(os.environ.get("T_MIN"))
+        self.DATABASE = os.environ.get("DATABASE")
+
 
     def __del__(self):
         if self._hub_connection != None:
