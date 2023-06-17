@@ -20,7 +20,7 @@ class Main:
         self.TOKEN = token  # Setup your token here
         self.TICKETS = os.environ.get('TICKETS', default=3)  # Setup your tickets here
         self.T_MAX = os.environ.get('T_MAX', default=30)  # Setup your max temperature here
-        self.T_MIN = os.environ.get('T_MIN', default=0)  # Setup your min temperature here
+        self.T_MIN = os.environ.get('T_MIN', default=15)  # Setup your min temperature here
         self.DATABASE = None  # Setup your database here
 
     def __del__(self):
