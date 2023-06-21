@@ -4,12 +4,10 @@ import requests
 import json
 import time
 import os
-from dotenv import load_dotenv
 
 
 class Main:
     def __init__(self):
-        load_dotenv()  # This loads the variables from .env
         self._hub_connection = None
         self.HOST = os.environ.get("HOST")
         self.TOKEN = os.environ.get("TOKEN")
