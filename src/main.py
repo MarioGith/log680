@@ -16,11 +16,11 @@ class Main:
             exit()
 
         self._hub_connection = None
-        self.HOST = "http://34.95.34.5"  # Setup your host here
-        self.TOKEN = token  # Setup your token here
-        self.TICKETS = os.environ.get('TICKETS', default=3)  # Setup your tickets here
-        self.T_MAX = os.environ.get('T_MAX', default=30)  # Setup your max temperature here
-        self.T_MIN = os.environ.get('T_MIN', default=15)  # Setup your min temperature here
+        self.HOST = os.environ.get('HOST', default="http://34.95.34.5")  # Setup your host here, configurable par le client
+        self.TOKEN = token  # Setup your token here, configurable par le client
+        self.TICKETS = os.environ.get('TICKETS', default=1)  # Setup your tickets here //cb de fois que ca va repeat
+        self.T_MAX = os.environ.get('T_MAX', default=30)  # Setup your max temperature here, configurable par le client
+        self.T_MIN = os.environ.get('T_MIN', default=15)  # Setup your min temperature here, configurable par le client
         self.DATABASE = None  # Setup your database here
 
     def __del__(self):
