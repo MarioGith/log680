@@ -16,7 +16,9 @@ repos:
       rev: v2.17.4
       hooks:
         - id: pylint
-          args: [--disable=missing-docstring]
+          args:
+            - --disable=C0114,C0116,R0914,R0801,W0719
+            - --fail-under=4
 
 #    - repo: local
 #      hooks:

@@ -1,19 +1,30 @@
 import requests
 import os
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Source : https://gist.github.com/gbaman/b3137e18c739e0cf98539bf4ec4366ad
-headers = {"Authorization": "token {}".format(os.environ['TOKEN'])}
+headers = {"Authorization": "token {}".format(os.environ["TOKEN"])}
 
 
-def run_query(query,
-              variables=None):  # A simple function to use requests.post to make the API call. Note the json= section.
-    request = requests.post('https://api.github.com/graphql', json={'query': query, 'variables': variables},
-                            headers=headers)
+def run_query(
+    query, variables=None
+):  # A simple function to use requests.post to make the API call. Note the json= section.
+    request = requests.post(
+        "https://api.github.com/graphql",
+        json={"query": query, "variables": variables},
+        headers=headers,
+    )
     if request.status_code == 200:
         return request.json()
     else:
-        raise Exception("Query failed to run by returning code of {}. {}".format(request.status_code, query))
+        raise Exception(
+            "Query failed to run by returning code of {}. {}".format(
+                request.status_code, query
+            )
+        )
 
 
 def get_pr_avg_delay_until_comment():
@@ -63,13 +74,17 @@ def get_pr_avg_delay_until_comment():
 
             first_comment = comments[0]["node"]
             first_comment_created_at = first_comment["createdAt"]
-            delay = datetime.strptime(first_comment_created_at, "%Y-%m-%dT%H:%M:%SZ") - datetime.strptime(pr_created_at,
-                                                                                                          "%Y-%m-%dT%H:%M:%SZ")
+            delay = datetime.strptime(
+                first_comment_created_at, "%Y-%m-%dT%H:%M:%SZ"
+            ) - datetime.strptime(pr_created_at, "%Y-%m-%dT%H:%M:%SZ")
             temp += delay
             print(
-                f"PR #{pull_request_number}, PR createdAt {pr_created_at}, first comment createdAt {first_comment}, delay: {delay}")
+                f"PR #{pull_request_number}, PR createdAt {pr_created_at}, first comment createdAt {first_comment}, delay: {delay}"
+            )
         if not comments:
-            print(f"PR #{pull_request_number}, PR createdAt {pr_created_at}, no comment")
+            print(
+                f"PR #{pull_request_number}, PR createdAt {pr_created_at}, no comment"
+            )
 
         pr_info = {
             "id": pull_request["id"],
@@ -79,7 +94,7 @@ def get_pr_avg_delay_until_comment():
             "createdAt": pull_request["createdAt"],
             "time_first_comment": str(first_comment),
             # Ternary expression
-            "closedAt": pull_request["closedAt"] if pull_request["closedAt"] else None
+            "closedAt": pull_request["closedAt"] if pull_request["closedAt"] else None,
         }
 
         pr_list.append(pr_info)
@@ -89,7 +104,7 @@ def get_pr_avg_delay_until_comment():
 
     json_result = {
         "avg_time_for_first_comment": average_delay.total_seconds(),
-        "pr_list": pr_list
+        "pr_list": pr_list,
     }
 
     return json_result
