@@ -17,13 +17,13 @@ repos:
       hooks:
         - id: pylint
           args:
-            - --disable=C0114,C0116,R0914,R0801,W0719
+            - --disable=C0114,C0115,C0116,R0914,R0801,W0719
             - --fail-under=4
 
     - repo: local
       hooks:
         - id: unittest
           name: Unit test
-          entry: python -m unittest discover -s unit_testing/app -s unit_testing/metrics/kanban/
+          entry: python -m unittest discover -s unit_testing/app -s unit_testing/metrics/kanban -s unit_testing/metrics/pullrequests
           language: system
           pass_filenames: false
