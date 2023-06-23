@@ -20,10 +20,10 @@ repos:
             - --disable=C0114,C0116,R0914,R0801,W0719
             - --fail-under=4
 
-#    - repo: local
-#      hooks:
-#        - id: unittest
-#          name: Unit test
-#          entry: python -m discover unit_testing
-#          language: python
-#          pass_filenames: false
+    - repo: local
+      hooks:
+        - id: unittest
+          name: Unit test
+          entry: python -m unittest discover
+          language: python
+          pass_filenames: false
