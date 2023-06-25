@@ -1,1 +1,10 @@
-## To implement
+repos:
+-   repo: https://github.com/psf/black
+    rev: 21.9b0
+    hooks:
+    -   id: black
+-   repo: https://github.com/pylint-dev/pylint
+    rev: v2.17.4
+    hooks:
+    -  id: pylint
+       exclude: main.py
