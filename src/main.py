@@ -1,8 +1,9 @@
-from signalrcore.hub_connection_builder import HubConnectionBuilder
-import logging
-import requests
 import json
+import logging
 import time
+
+import requests
+from signalrcore.hub_connection_builder import HubConnectionBuilder
 
 
 class Main:
