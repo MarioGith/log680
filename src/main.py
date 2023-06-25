@@ -4,20 +4,22 @@ import requests
 import json
 import time
 
-
 class Main:
     def __init__(self):
         self._hub_connection = None
-        self.HOST = None  # Setup your host here
-        self.TOKEN = None  # Setup your token here
+        self.HOST = "34.95.34.5"  # Setup your host here
+        self.TOKEN = "fHtJqgMACx"  # Setup your token here
         self.TICKETS = None  # Setup your tickets here
-        self.T_MAX = None  # Setup your max temperature here
-        self.T_MIN = None  # Setup your min temperature here
-        self.DATABASE = None  # Setup your database here
+        self.T_MAX = 23  # Setup your max temperature here
+        self.T_MIN = 18  # Setup your min temperature here
+        self.DATABASE = "OxygenDB"  # Setup your database here
+        #self.dbConnection = None
 
     def __del__(self):
         if self._hub_connection != None:
             self._hub_connection.stop()
+        # if self.dbConnection != None:
+        #     self.dbConnection.close()
 
     def setup(self):
         self.setSensorHub()
@@ -73,8 +75,10 @@ class Main:
         print(details)
 
     def send_event_to_database(self, timestamp, event):
+        # 3 events possible, Turn on AC, Turn on Heat or Set to normal
         try:
             # To implement
+            # voir create_connection.py
             pass
         except requests.exceptions.RequestException as e:
             # To implement
