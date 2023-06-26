@@ -8,8 +8,8 @@ import time
 class Main:
     def __init__(self):
         self._hub_connection = None
-        self.HOST = None  # Setup your host here
-        self.TOKEN = None  # Setup your token here
+        self.HOST = "http://34.95.34.5" # Setup your host here
+        self.TOKEN = "n3joY5Uz4Q" # Setup your token here
         self.TICKETS = None  # Setup your tickets here
         self.T_MAX = None  # Setup your max temperature here
         self.T_MIN = None  # Setup your min temperature here
