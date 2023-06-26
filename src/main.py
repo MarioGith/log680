@@ -1,8 +1,9 @@
-from signalrcore.hub_connection_builder import HubConnectionBuilder
-import logging
-import requests
 import json
+import logging
 import time
+
+import requests
+from signalrcore.hub_connection_builder import HubConnectionBuilder
 
 
 class Main:
@@ -49,7 +50,9 @@ class Main:
         self._hub_connection.on("ReceiveSensorData", self.onSensorDataReceived)
         self._hub_connection.on_open(lambda: print("||| Connection opened."))
         self._hub_connection.on_close(lambda: print("||| Connection closed."))
-        self._hub_connection.on_error(lambda data: print(f"||| An exception was thrown closed: {data.error}"))
+        self._hub_connection.on_error(
+            lambda data: print(f"||| An exception was thrown closed: {data.error}")
+        )
 
     def onSensorDataReceived(self, data):
         try:
