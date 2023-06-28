@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_restful import Api
+from flask import Api
 from flasgger import Swagger
 from api.routes import register_routes
 
