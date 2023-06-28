@@ -1,4 +1,4 @@
-name: Oxygen-CS CI pipeline
+name: OxygenCSPipeline
 run-name: Build 
 on:
   push:
