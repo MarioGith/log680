@@ -46,7 +46,7 @@ class IssuesCompletedWithinPeriodController(Resource):
                   type: string
                 end_date:
                   type: string
-                  pr_list:
+                  issue_list:
                     type: array
                     items:
                         type: object
