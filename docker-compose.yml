@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  oxygen-cs:
+    build: .
+    ports:
+      - "4000:80"
+    environment:
+      - HOST=http://34.95.34.5
+      - TOKEN=6M6c4zsXmt
+      - TICKETS=5
+      - T_MAX=100
+      - T_MIN=0
+      - DATABASE=your_database_string
