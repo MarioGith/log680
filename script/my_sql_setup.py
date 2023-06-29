@@ -1,3 +1,4 @@
+"""Imports"""
 import mysql.connector
 
 # Establish a connection to the MySQL server
@@ -8,28 +9,25 @@ conn = mysql.connector.connect(
 )
 
 # Create a new database
-database_name = "OxygenDB"  # Replace with your desired database name
+DATABAS_NAME = "OxygenDB"  # Replace with your desired database name
 cursor = conn.cursor()
-cursor.execute(f"CREATE DATABASE IF NOT EXISTS {database_name}")
+cursor.execute(f"CREATE DATABASE IF NOT EXISTS {DATABAS_NAME}")
 
 # Switch to the newly created database
-cursor.execute(f"USE {database_name}")
+cursor.execute(f"USE {DATABAS_NAME}")
 
 # Create a table
-table_name = "AC_Event"  # Replace with your desired table name
+TABLE_NAME = "AC_Event"  # Replace with your desired table name
 cursor = conn.cursor()
 create_table_query = f"""
-    CREATE TABLE {table_name} (
+    CREATE TABLE {TABLE_NAME} (
         id INT AUTO_INCREMENT PRIMARY KEY,
         timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        event Varchar(64) NOT NULL,
-        
+        event VARCHAR(64) NOT NULL,
+        temp DECIMAL(6,2) NOT NULL         
     )
 """
 cursor.execute(create_table_query)
 
-# Close the cursor and connection
+# Close the cursor
 cursor.close()
-conn.close()
-
-print(f"Database {database_name} and table {table_name} created successfully!")

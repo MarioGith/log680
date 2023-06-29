@@ -1,0 +1,5 @@
+requests
+signalrcore
+mysql
+pylint
+mysql-connector-python

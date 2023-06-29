@@ -1,41 +1,48 @@
-from signalrcore.hub_connection_builder import HubConnectionBuilder
-import logging
-import requests
+"""Imports"""
 import json
+import logging
 import time
+import requests
+
+from signalrcore.hub_connection_builder import HubConnectionBuilder
+
 
 class Main:
+    """Docstring"""
     def __init__(self):
-        self._hub_connection = None
-        self.HOST = "34.95.34.5"  # Setup your host here
-        self.TOKEN = "fHtJqgMACx"  # Setup your token here
-        self.TICKETS = None  # Setup your tickets here
-        self.T_MAX = 23  # Setup your max temperature here
-        self.T_MIN = 18  # Setup your min temperature here
-        self.DATABASE = "OxygenDB"  # Setup your database here
+        self.hub_connection = None
+        self.host = "34.95.34.5"  # Setup your host here
+        self.token = "fHtJqgMACx"  # Setup your token here
+        self.tickets = None  # Setup your tickets here
+        self.t_max = 23  # Setup your max temperature here
+        self.t_min = 18  # Setup your min temperature here
+        self.database = "OxygenDB"  # Setup your database here
         #self.dbConnection = None
 
     def __del__(self):
-        if self._hub_connection != None:
-            self._hub_connection.stop()
+        if self.hub_connection is not None:
+            self.hub_connection.stop()
         # if self.dbConnection != None:
         #     self.dbConnection.close()
 
     def setup(self):
-        self.setSensorHub()
+        """Docstring"""
+        self.set_sensor_hub()
 
     def start(self):
+        """Docstring"""
         self.setup()
-        self._hub_connection.start()
+        self.hub_connection.start()
 
         print("Press CTRL+C to exit.")
         while True:
             time.sleep(2)
 
-    def setSensorHub(self):
-        self._hub_connection = (
+    def set_sensor_hub(self):
+        """Docstring"""
+        self.hub_connection = (
             HubConnectionBuilder()
-            .with_url(f"{self.HOST}/SensorHub?token={self.TOKEN}")
+            .with_url(f"{self.host}/SensorHub?token={self.token}")
             .configure_logging(logging.INFO)
             .with_automatic_reconnect(
                 {
@@ -48,42 +55,50 @@ class Main:
             .build()
         )
 
-        self._hub_connection.on("ReceiveSensorData", self.onSensorDataReceived)
-        self._hub_connection.on_open(lambda: print("||| Connection opened."))
-        self._hub_connection.on_close(lambda: print("||| Connection closed."))
-        self._hub_connection.on_error(lambda data: print(f"||| An exception was thrown closed: {data.error}"))
+        self.hub_connection.on("ReceiveSensorData", self.on_sensor_data_received)
+        self.hub_connection.on_open(lambda: print("||| Connection opened."))
+        self.hub_connection.on_close(lambda: print("||| Connection closed."))
+        self.hub_connection.on_error(lambda data: print(f"||| \
+                               An exception was thrown closed: {data.error}"))
 
-    def onSensorDataReceived(self, data):
+    def on_sensor_data_received(self, data):
+        """Docstring"""
         try:
             print(data[0]["date"] + " --> " + data[0]["data"])
             date = data[0]["date"]
-            dp = float(data[0]["data"])
-            self.send_temperature_to_fastapi(date, dp)
-            self.analyzeDatapoint(date, dp)
-        except Exception as err:
+            d_p = float(data[0]["data"])
+            self.send_temperature_to_fastapi(date, d_p)
+            self.analyze_datapoint(date, d_p)
+        except ValueError as err:
             print(err)
 
-    def analyzeDatapoint(self, date, data):
-        if float(data) >= float(self.T_MAX):
-            self.sendActionToHvac(date, "TurnOnAc", self.TICKETS)
-        elif float(data) <= float(self.T_MIN):
-            self.sendActionToHvac(date, "TurnOnHeater", self.TICKETS)
+    def analyze_datapoint(self, date, data):
+        """Docstring"""
+        if float(data) >= float(self.t_max):
+            self.send_action_to_hvac(date, "TurnOnAc", self.tickets)
+        elif float(data) <= float(self.t_min):
+            self.send_action_to_hvac(date, "TurnOnHeater", self.tickets)
 
-    def sendActionToHvac(self, date, action, nbTick):
-        r = requests.get(f"{self.HOST}/api/hvac/{self.TOKEN}/{action}/{nbTick}")
-        details = json.loads(r.text)
-        print(details)
+    def send_action_to_hvac(self, date, action, nb_tick):
+        """Docstring"""
+        response = requests.get(f"{self.host}/api/hvac/{self.token}/{action}/{nb_tick}", timeout=10)
+        details = json.loads(response.text)
+        print(details, date)
 
     def send_event_to_database(self, timestamp, event):
-        # 3 events possible, Turn on AC, Turn on Heat or Set to normal
+        """3 events possible, Turn on AC, Turn on Heat or Set to normal"""
+        print(timestamp, event)
         try:
             # To implement
             # voir create_connection.py
             pass
-        except requests.exceptions.RequestException as e:
+        except requests.exceptions.RequestException as exception:
             # To implement
-            pass
+            print(exception)
 
+    def send_temperature_to_fastapi(self, date, d_p):
+        """Docstring"""
+        print(date, d_p)
 
 if __name__ == "__main__":
     main = Main()
