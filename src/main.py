@@ -3,6 +3,7 @@ import logging
 import requests
 import json
 import time
+import psycopg2
 
 
 class Main:
@@ -10,10 +11,15 @@ class Main:
         self._hub_connection = None
         self.HOST = "http://34.95.34.5" # Setup your host here
         self.TOKEN = "n3joY5Uz4Q" # Setup your token here
-        self.TICKETS = None  # Setup your tickets here
-        self.T_MAX = None  # Setup your max temperature here
-        self.T_MIN = None  # Setup your min temperature here
-        self.DATABASE = None  # Setup your database here
+        self.TICKETS = 3  # Setup your tickets here
+        self.T_MAX = 60  # Setup your max temperature here
+        self.T_MIN = 30  # Setup your min temperature here
+        self.DATABASE = psycopg2.connect(
+            host="db",
+            dbname="oxygen12db",
+            user="admin",
+            password="admin"
+        )
 
     def __del__(self):
         if self._hub_connection != None:
@@ -56,8 +62,10 @@ class Main:
             print(data[0]["date"] + " --> " + data[0]["data"])
             date = data[0]["date"]
             dp = float(data[0]["data"])
-            self.send_temperature_to_fastapi(date, dp)
+            #self.send_temperature_to_fastapi(date, dp)
             self.analyzeDatapoint(date, dp)
+
+            self.send_event_to_database(date, dp)
         except Exception as err:
             print(err)
 
@@ -73,12 +81,22 @@ class Main:
         print(details)
 
     def send_event_to_database(self, timestamp, event):
+        #print timestamp and event
+        #print(timestamp + " --> " + str(event))
+        print(timestamp)
+        print(event)
         try:
-            # To implement
-            pass
-        except requests.exceptions.RequestException as e:
-            # To implement
-            pass
+            #SQL query to insert data into the hvac_events table
+            query = "INSERT INTO oxygen12db.hvac_events (eventDate, hvac_value) VALUES (%s, %s);"
+
+            cursor = self.DATABASE.cursor()
+            cursor.execute(query, (timestamp, event))
+            self.DATABASE.commit()
+            cursor.close()
+        except psycopg2.Error as e:
+            print(f"Error inserting data into the database: {e}")
+            self.DATABASE.rollback()
+        pass
 
 
 if __name__ == "__main__":
