@@ -12,3 +12,6 @@ black
 pre-commit
 pipenv
 python-dotenv
+
+
+
