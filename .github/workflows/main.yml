@@ -1,16 +1,33 @@
 name: Oxygen-CS CI pipeline
-run-name: Build 
+run-name: Oxygen-CS CI pipeline
 on:
   push:
     branches:
-    - main
-    # develop
+      - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
-      
-      - name: Hello...?
-        run: echo Hello World!
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r libraries.txt  
+
+      - name: Run app
+        env:
+          APP_ENV_VARIABLE: ${{ secrets.METTRE_APP_ENV }}
+        run: |
+          python app.py
+
+#      - name: Run unit tests
+#        run: python -m unittest discover
   

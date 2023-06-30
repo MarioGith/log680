@@ -16,6 +16,8 @@ def validate_date_format(date_string):
         return True
     else:
         return False
+
+
 class PipelineBuildPeriodController(Resource):
     def get(self):
         """
@@ -40,9 +42,7 @@ class PipelineBuildPeriodController(Resource):
             schema:
               type: object
               properties:
-                pipeline_id:
-                  type: string
-                pipeline_name:
+                total_average_build_time:
                   type: string
                 pipeline_list:
                     type: array
@@ -57,7 +57,7 @@ class PipelineBuildPeriodController(Resource):
                             type: string
                           updated:
                             type: string
-                          started:
+                          run_started_at:
                             type: string
                           execution_time:
                             type: string
@@ -87,10 +87,9 @@ class PipelineBuildPeriodController(Resource):
             if end_date_obj <= start_date_obj:
                 return {'error': 'End date must be after start date'}, 400
 
-
             pipeline_build_period = PipelineBuildPeriod.get_build_period(start_date_obj, end_date_obj)
 
-            #IssuesCompletedWithinPeriodDB.insert_data(issues_completed)
+            # IssuesCompletedWithinPeriodDB.insert_data(issues_completed)
 
             return {'pipeline_build_period': pipeline_build_period}
         except ValueError:
