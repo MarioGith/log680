@@ -28,4 +28,4 @@ Ce fichier définit comment Docker doit construire une image personnalisée pour
 
 ```docker-compose up --build```
 
-vous pouvez y accéder en allant sur http://localhost:4000 dans votre navigateur.
+vous pouvez y accéder en allant sur http://localhost:80 dans votre navigateur.
