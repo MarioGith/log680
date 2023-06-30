@@ -104,6 +104,8 @@ def get_workflow_info(pipeline_name, resource_path):
     if response.status_code == 200:
         result = response.json()
 
+        print(result)
+
         pipeline_id = result['id']
         created_at = datetime.datetime.fromisoformat(result['created_at'].replace("Z", "+00:00"))
         updated_at = datetime.datetime.fromisoformat(result['updated_at'].replace("Z", "+00:00"))
