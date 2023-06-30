@@ -13,5 +13,3 @@ pre-commit
 pipenv
 python-dotenv
 
-
-
