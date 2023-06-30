@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a31f32f24a57ed23d4b453ecea90caaec0872e59d6f5b2f57c770f6e0e01ec4f"
+            "sha256": "dd417f40c7e2745386a163286bd4796f5f742d911a8146cb78444c42004b807e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -163,19 +163,19 @@
         },
         "pipenv": {
             "hashes": [
-                "sha256:6069e9067853a34ff70d079e24d74c13c9146f95affd5843f904f9acdba387e4",
-                "sha256:9b396bcfd7bdc1077bf2b51049973e7fb9c91f6662461c8b22d720d336cd8dc1"
+                "sha256:624ea93feee40d49269fbb6a875a752b61e57e52255f9e9742247b20304a4f40",
+                "sha256:e85566b988754dafd71489ff3d5d54b9c65fa13c0db78f5c19060f10038411f6"
             ],
             "index": "pypi",
-            "version": "==2023.6.12"
+            "version": "==2023.6.18"
         },
         "platformdirs": {
             "hashes": [
-                "sha256:0ade98a4895e87dc51d47151f7d2ec290365a585151d97b4d8d6312ed6132fed",
-                "sha256:e48fabd87db8f3a7df7150a4a5ea22c546ee8bc39bc2473244730d4b56d2cc4e"
+                "sha256:b0cabcb11063d21a0b261d557acb0a9d2126350e63b70cdf7db6347baea456dc",
+                "sha256:ca9ed98ce73076ba72e092b23d3c93ea6c4e186b3f1c3dad6edd98ff6ffcca2e"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==3.5.3"
+            "version": "==3.8.0"
         },
         "python-dotenv": {
             "hashes": [
@@ -195,11 +195,11 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:5df61bf30bb10c6f756eb19e7c9f3b473051f48db77fddbe06ff2ca307df9a6f",
-                "sha256:62642358adc77ffa87233bc4d2354c4b2682d214048f500964dbe760ccedf102"
+                "sha256:11e52c67415a381d10d6b462ced9cfb97066179f0e871399e006c4ab101fc85f",
+                "sha256:baf1fdb41c6da4cd2eae722e135500da913332ab3f2f5c7d33af9b492acb5235"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==67.8.0"
+            "version": "==68.0.0"
         },
         "signalrcore": {
             "hashes": [
