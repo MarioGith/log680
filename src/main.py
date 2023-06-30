@@ -2,6 +2,7 @@ import json
 import logging
 import time
 import psycopg2
+import os
 
 import requests
 from signalrcore.hub_connection_builder import HubConnectionBuilder
@@ -10,16 +11,16 @@ from signalrcore.hub_connection_builder import HubConnectionBuilder
 class Main:
     def __init__(self):
         self._hub_connection = None
-        self.HOST = "http://34.95.34.5" # Setup your host here
-        self.TOKEN = "n3joY5Uz4Q" # Setup your token here
-        self.TICKETS = 3  # Setup your tickets here
-        self.T_MAX = 60  # Setup your max temperature here
-        self.T_MIN = 30  # Setup your min temperature here
+        self.HOST = os.environ.get('HOST') # Setup your host here
+        self.TOKEN = os.environ.get('TOKEN') # Setup your token here
+        self.TICKETS = os.environ.get('TICKETS')  # Setup your tickets here
+        self.T_MAX = os.environ.get('T_MAX')  # Setup your max temperature here
+        self.T_MIN = os.environ.get('T_MIN')  # Setup your min temperature here
         self.DATABASE = psycopg2.connect(
-            host="db",
-            dbname="oxygen12db",
-            user="admin",
-            password="admin"
+            host=os.environ.get('DATABASE_HOST'),
+            dbname=os.environ.get('DATABASE_DBNAME'),
+            user=os.environ.get('DATABASE_USER'),
+            password=os.environ.get('DATABASE_PASSWORD')
         )
 
     def __del__(self):
