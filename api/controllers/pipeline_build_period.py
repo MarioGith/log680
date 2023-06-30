@@ -1,10 +1,12 @@
 from datetime import datetime
-
-from flask import request
-from flask_restful import Resource
-from metrics.kanban import IssueLeadTimePeriod
-from database.metrics.kanban import IssueLeadTimePeriodDB
 import re
+
+from flask_restful import Resource
+from metrics.pipeline import PipelineBuildPeriod
+from flask import request
+from database.metrics.kanban import IssueLeadTimeDB
+from psycopg2.errorcodes import UNIQUE_VIOLATION
+import psycopg2
 
 date_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}$')
 
@@ -14,12 +16,10 @@ def validate_date_format(date_string):
         return True
     else:
         return False
-
-
-class IssueLeadTimePeriodController(Resource):
+class PipelineBuildPeriodController(Resource):
     def get(self):
         """
-        Get the issue lead time within a specified period.
+        Get the average build time.
         ---
         parameters:
           - name: startdate
@@ -34,34 +34,36 @@ class IssueLeadTimePeriodController(Resource):
             format: date
             required: true
             description: The end date of the period as YYYY-MM-DD.
-
         responses:
           200:
-            description: The issue lead time within the period.
+            description: The average build time.
             schema:
               type: object
               properties:
-                lead_time:
+                pipeline_id:
                   type: string
-                  issue_list:
+                pipeline_name:
+                  type: string
+                pipeline_list:
                     type: array
                     items:
                         type: object
                         properties:
                           id:
                             type: string
-                          number:
-                            type: integer
-                          title:
+                          name:
                             type: string
-                          description:
+                          created:
                             type: string
-                          createdAt:
+                          updated:
                             type: string
-                          closedAt:
+                          started:
                             type: string
+                          execution_time:
+                            type: string
+
           400:
-            description: Invalid parameters.
+            description: Invalid parameter.
             schema:
               type: object
               properties:
@@ -82,11 +84,14 @@ class IssueLeadTimePeriodController(Resource):
             start_date_obj = datetime.strptime(start_date, "%Y-%m-%d")
             end_date_obj = datetime.strptime(end_date, "%Y-%m-%d")
 
-            issue_lead_time_period = IssueLeadTimePeriod.get_issue_lead_time_within_period(start_date_obj, end_date_obj)
+            if end_date_obj <= start_date_obj:
+                return {'error': 'End date must be after start date'}, 400
 
-            IssueLeadTimePeriodDB.insert_data(issue_lead_time_period)
 
-            return {'issue_lead_time_period': issue_lead_time_period}
+            pipeline_build_period = PipelineBuildPeriod.get_build_period(start_date_obj, end_date_obj)
+
+            #IssuesCompletedWithinPeriodDB.insert_data(issues_completed)
+
+            return {'pipeline_build_period': pipeline_build_period}
         except ValueError:
             return {'error': 'Invalid date parameters'}, 400
-

@@ -32,7 +32,7 @@ class IssuesActiveByColumnController(Resource):
                   type: string
                 total_active_tasks:
                   type: string
-                pr_list:
+                issue_list:
                     type: array
                     items:
                         type: object

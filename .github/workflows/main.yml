@@ -1,0 +1,16 @@
+name: Oxygen-CS CI pipeline
+run-name: Build 
+on:
+  push:
+    branches:
+    - main
+    # develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Hello...?
+        run: echo Hello World!
+  

@@ -8,6 +8,10 @@ from api.controllers.pr_merged_in_period_controller import PRMergedInPeriodContr
 from api.controllers.pr_avg_lead_time_controller import PRAvgLeadTimeControler
 from api.controllers.pr_avg_comments import PRAvgCommentsController
 from api.controllers.issue_snapshot_controller import IssueSnapshotController
+from api.controllers.pipeline_execution_time_controller import PipelineExecutionTimeController
+from api.controllers.pipeline_number_build_controller import PipelineNumberBuildController
+from api.controllers.pipeline_build_period import PipelineBuildPeriodController
+from api.controllers.pipeline_success_rate_controller import PipelineSuccessRateController
 
 def register_routes(api):
     api.add_resource(IssueLeadTimeController, '/IssueLeadTime/<int:issue_no>')
@@ -20,3 +24,7 @@ def register_routes(api):
     api.add_resource(PRMergedInPeriodController, '/PRMergedInPeriod')
     api.add_resource(PRAvgLeadTimeControler, '/PRAvgLeadTime')
     api.add_resource(IssueSnapshotController, '/metric/snapshot/')
+    api.add_resource(PipelineExecutionTimeController, '/PipelineExecutionTime')
+    api.add_resource(PipelineNumberBuildController, '/PipelineNumberBuild')
+    api.add_resource(PipelineBuildPeriodController, '/PipelineBuildPeriod')
+    api.add_resource(PipelineSuccessRateController, '/PipelineSuccessRate')
