@@ -7,7 +7,6 @@ import os
 import requests
 from signalrcore.hub_connection_builder import HubConnectionBuilder
 
-#ajout d'un commentaire pour lancer le build
 
 class Main:
     def __init__(self):
