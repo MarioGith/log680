@@ -22,6 +22,7 @@ jobs:
       TICKETS: TICKETS
       T_MAX: T_MAX
       T_MIN: T_MIN
+      DATABASE_HOST: DATABASE_HOST
       
     steps:
     - uses: actions/checkout@v3
