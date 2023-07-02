@@ -32,3 +32,10 @@ services:
       - "5050:80"
     volumes:
       - ./data/pgadmin-data:/var/lib/pgadmin
+
+  web:
+    build: .
+    environment:
+      - TOKEN=${TOKEN}
+    ports:
+      - "8000:5000"
