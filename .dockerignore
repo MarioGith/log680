@@ -1,0 +1,8 @@
+# Exclude the ./test directory
+test/
+
+# Exclude the ./github directory
+.github/
+
+# Exclude the ./doc directory
+doc/

@@ -3,3 +3,4 @@ signalrcore
 mysql
 pylint
 mysql-connector-python
+pre-commit
