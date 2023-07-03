@@ -3,17 +3,18 @@ import logging
 import requests
 import json
 import time
+import psycopg2
 
 
 class Main:
     def __init__(self):
         self._hub_connection = None
-        self.HOST = None  # Setup your host here
-        self.TOKEN = None  # Setup your token here
-        self.TICKETS = None  # Setup your tickets here
-        self.T_MAX = None  # Setup your max temperature here
-        self.T_MIN = None  # Setup your min temperature here
-        self.DATABASE = None  # Setup your database here
+        self.HOST = "http://34.95.34.5"  # Setup your host here
+        self.TOKEN = "0FagpkvF4B"  # Setup your token here
+        self.TICKETS = 5  # Setup your tickets here
+        self.T_MAX = 35  # Setup your max temperature here
+        self.T_MIN = 10  # Setup your min temperature here
+        self.DATABASE = "jdbc:postgresql://localhost:5432/db_metrics"  # Setup your database here
 
     def __del__(self):
         if self._hub_connection != None:
@@ -58,6 +59,7 @@ class Main:
             dp = float(data[0]["data"])
             self.send_temperature_to_fastapi(date, dp)
             self.analyzeDatapoint(date, dp)
+            self.send_event_to_database(date, dp)
         except Exception as err:
             print(err)
 
@@ -73,14 +75,27 @@ class Main:
         print(details)
 
     def send_event_to_database(self, timestamp, event):
+       #try:
+            # To implement
+         #   pass
+      #  except requests.exceptions.RequestException as e:
+            # To implement
+         #   pass
         try:
-            # To implement
-            pass
-        except requests.exceptions.RequestException as e:
-            # To implement
-            pass
+            conn = psycopg2.connect(self.DATABASE)
+            cursor = conn.cursor()
+            insert_query = "INSERT INTO temperature (timestamp, event) VALUES (%s, %s)"
+            cursor.execute(insert_query, (timestamp, event))
+            conn.commit()
+            cursor.close()
+            conn.close()
+            print("Données insérées dans la base de données PostgreSQL.")
+        except psycopg2.Error as e:
+         print("Erreur lors de l'insertion des données dans la base de données PostgreSQL:", e)
+        
 
 
 if __name__ == "__main__":
     main = Main()
     main.start()
+
