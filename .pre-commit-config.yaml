@@ -1,1 +1,18 @@
-## To implement
+#configuration du static analysis pre-commit hook
+repos:
+-   repo: https://github.com/psf/black #black pour le formattage
+    rev: 23.3.0 
+    hooks:
+    -   id: black
+        language_version: python3.8
+
+-   repo: https://github.com/PyCQA/flake8 #flake8 pour le linting
+    rev: 6.0.0
+    hooks:
+    -   id: flake8
+
+-   repo: https://github.com/PyCQA/bandit #bandit pour les failles de securite connues
+    rev: 1.7.5
+    hooks:
+    -   id: bandit
+    
