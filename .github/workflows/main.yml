@@ -43,7 +43,7 @@ jobs:
 
 
       - name: Docker Push
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/log680repo:latest
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/log680repo
 # ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_PASSWORD }}:VERSION
 # 
 
