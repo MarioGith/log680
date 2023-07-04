@@ -38,7 +38,7 @@ class Main:
             .configure_logging(logging.INFO)
             .with_automatic_reconnect(
                 {
-                    "type": "rawa",
+                    "type": "raw",
                     "keep_alive_interval": 10,
                     "reconnect_interval": 5,
                     "max_attempts": 999,
