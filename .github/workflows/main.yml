@@ -5,6 +5,14 @@ on:
     branches:
       - main
 
+env:
+  TOKEN: ${{ secrets.TOKEN }}
+  HOST: ${{ secrets.HOST }}
+  OXYGENCS_TOKEN: ${{ secrets.OXYGENCS_TOKEN }}
+  TICKETS: ${{ secrets.TICKETS }}
+  T_MAX: ${{ secrets.T_MAX }}
+  T_MIN: ${{ secrets.T_MIN }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,13 +29,18 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r libraries.txt  
+          
+      - name: Run unit tests
+        run: python automatic_testing.py
 
-      - name: Run app
-        env:
-          APP_ENV_VARIABLE: ${{ secrets.METTRE_APP_ENV }}
-        run: |
-          python app.py
+      - name: Create the Docker image
+        run: docker build . --file Dockerfile
+
 
 #      - name: Run unit tests
 #        run: python -m unittest discover
-  
+
+
+#      - name: Run app
+#        run: |
+#          python app.py
