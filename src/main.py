@@ -16,9 +16,8 @@ class Main:
         self.T_MIN = int(os.environ.get("T_MIN"))
         self.DATABASE = os.environ.get("DATABASE")
 
-
     def __del__(self):
-        if self._hub_connection != None:
+        if self._hub_connection is not None:
             self._hub_connection.stop()
 
     def setup(self):
@@ -51,7 +50,9 @@ class Main:
         self._hub_connection.on("ReceiveSensorData", self.onSensorDataReceived)
         self._hub_connection.on_open(lambda: print("||| Connection opened."))
         self._hub_connection.on_close(lambda: print("||| Connection closed."))
-        self._hub_connection.on_error(lambda data: print(f"||| An exception was thrown closed: {data.error}"))
+        self._hub_connection.on_error(lambda data: print(
+            f"||| An exception was thrown closed: {data.error}"
+        ))
 
     def onSensorDataReceived(self, data):
         try:
@@ -70,17 +71,19 @@ class Main:
             self.sendActionToHvac(date, "TurnOnHeater", self.TICKETS)
 
     def sendActionToHvac(self, date, action, nbTick):
-        r = requests.get(f"{self.HOST}/api/hvac/{self.TOKEN}/{action}/{nbTick}")
+        r = requests.get(
+            f"{self.HOST}/api/hvac/{self.TOKEN}/{action}/{nbTick}"
+        )
         details = json.loads(r.text)
         print(details)
 
-    def send_event_to_database(self, timestamp, event):
-        try:
-            # To implement
-            pass
-        except requests.exceptions.RequestException as e:
-            # To implement
-            pass
+    # def send_event_to_database(self, timestamp, event):
+    #     try:
+    #         # To implement
+    #         pass
+    #     except requests.exceptions.RequestException as e:
+    #         # To implement
+    #         pass
 
 
 if __name__ == "__main__":
