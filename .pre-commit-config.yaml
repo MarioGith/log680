@@ -1,1 +1,29 @@
-## To implement
+repos:
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v3.2.0
+      hooks:
+        - id: trailing-whitespace
+        - id: end-of-file-fixer
+        - id: check-yaml
+        - id: check-added-large-files
+    - repo: https://github.com/psf/black
+      rev: 23.3.0
+      hooks:
+        - id: black
+          language_version: python3.11
+          types: [python]
+    - repo: https://github.com/PyCQA/pylint
+      rev: v2.17.4
+      hooks:
+        - id: pylint
+          args:
+            - --disable=C0114,C0115,C0116,R0914,R0801,W0719,E0401
+            - --fail-under=4
+
+    - repo: local
+      hooks:
+        - id: unittest
+          name: Unit test
+          entry: python -m unittest discover -s unit_testing/app
+          language: system
+          pass_filenames: false

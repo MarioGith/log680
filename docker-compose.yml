@@ -32,3 +32,15 @@ services:
       - "5050:80"
     volumes:
       - ./data/pgadmin-data:/var/lib/pgadmin
+
+#  web:
+#    build: .
+#    environment:
+#      - TOKEN=${TOKEN}
+#      - HOST=${HOST}
+#      - OXYGENCS_TOKEN=${OXYGENCS_TOKEN}
+#      - TICKETS=${TICKETS}
+#      - T_MAX=${T_MAX}
+#      - T_MIN=${T_MIN}
+#    ports:
+#      - "8000:5000"

@@ -24,7 +24,7 @@ class IssueLeadTimeController(Resource):
               properties:
                 lead_time:
                   type: string
-                pr_info:
+                issue_info:
                   type: object
                   properties:
                     id:
@@ -50,15 +50,15 @@ class IssueLeadTimeController(Resource):
         try:
             issue_lead_time = IssueLeadTime.get_lead_time_of_issue(issue_no)
 
-            try:
-                IssueLeadTimeDB.insert_data(issue_lead_time)
-            except psycopg2.errors.lookup(UNIQUE_VIOLATION):
-                None
-            except TypeError:
-                return {'error': 'This number is not an issue'}
-
-            if issue_lead_time is None:
-                return {'error': 'Issue is None'}, 400
+            # try:
+            #     IssueLeadTimeDB.insert_data(issue_lead_time)
+            # except psycopg2.errors.lookup(UNIQUE_VIOLATION):
+            #     None
+            # except TypeError:
+            #     return {'error': 'This number is not an issue'}
+            #
+            # if issue_lead_time is None:
+            #     return {'error': 'Issue is None'}, 400
 
             return {'issue_lead_time': issue_lead_time}
         except ValueError:
