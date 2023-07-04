@@ -14,34 +14,36 @@ env:
   T_MIN: ${{ secrets.T_MIN }}
 
 jobs:
-  build:
+  build-container:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.11
+#       - name: Set up Python
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: 3.11
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r libraries.txt  
+#       - name: Install dependencies
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install -r libraries.txt  
           
 #       - name: Run unit tests
 #         run: python automatic_testing.py
+
+      - name: Create the Docker image
+        run: docker build . --file Dockerfile --tag log680repo:latest
 
       - name: docker login
         run: |
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Create the Docker image
-        run: docker build . --file Dockerfile --tag log680repo:$(date +%s)
+
 
       - name: Docker Push
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/log680repo:$(date +%s)
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/log680repo:latest
 # ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_PASSWORD }}:VERSION
 # 
 
