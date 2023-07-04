@@ -9,7 +9,7 @@ def insert_data(json_result):
         database='devopsmetrics',
         user='postgres',
         password='postgres',
-        host='127.0.0.1',
+        host='postgres',
         port='5432'
     )
     connection.autocommit = True
