@@ -61,10 +61,11 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_PASSWORD }}:VERSION
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-# ${{ steps.meta.outputs.tags }}
+# ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_PASSWORD }}:VERSION
+# 
 
 #      - name: Run unit tests
 #        run: python -m unittest discover
