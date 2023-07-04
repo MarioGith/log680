@@ -33,10 +33,15 @@ jobs:
 #       - name: Run unit tests
 #         run: python automatic_testing.py
 
+      - name: docker login
+        run: |
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+
       - name: Create the Docker image
         run: docker build . --file Dockerfile --tag oxygencs:$(date +%s)
 
-
+      - name: Docker Push
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/log680repo
 
 # ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_PASSWORD }}:VERSION
 # 
