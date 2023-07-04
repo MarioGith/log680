@@ -1,0 +1,22 @@
+name: Build docker image, run static analysis code and run tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-analysis-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build and run Docker Compose
+      run: |
+        docker-compose build
+        docker-compose up -d
+
+    -name: Running static analysis code with Flake8
+     run: docker-compose exec oxygen-cs pipenv run lint
