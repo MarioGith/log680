@@ -19,4 +19,4 @@ jobs:
         docker-compose up -d
 
     - name: Running static analysis code with Flake8
-      run: docker-compose exec oxygen-cs pipenv run lint
+      run: docker-compose exec -T oxygen-cs pipenv run lint
