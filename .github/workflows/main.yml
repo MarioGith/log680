@@ -6,14 +6,14 @@ on:
       - main
 
 env:
-  TOKEN: ${{ secrets.TOKEN }}
-  HOST: ${{ secrets.HOST }}
-  OXYGENCS_TOKEN: ${{ secrets.OXYGENCS_TOKEN }}
-  TICKETS: ${{ secrets.TICKETS }}
-  T_MAX: ${{ secrets.T_MAX }}
-  T_MIN: ${{ secrets.T_MIN }}
+#   TOKEN: ${{ secrets.TOKEN }}
+#   HOST: ${{ secrets.HOST }}
+#   OXYGENCS_TOKEN: ${{ secrets.OXYGENCS_TOKEN }}
+#   TICKETS: ${{ secrets.TICKETS }}
+#   T_MAX: ${{ secrets.T_MAX }}
+#   T_MIN: ${{ secrets.T_MIN }}
   IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/log680repo
-  IMAGE_TAG: 1.0.${{ github.run_number }}
+  IMAGE_TAG: 1.${{ github.run_number }}
 
 jobs:
 #   push_to_registry:
@@ -51,11 +51,11 @@ jobs:
             username: ${{ secrets.DOCKERHUB_USERNAME }}
             password: ${{ secrets.DOCKERHUB_PASSWORD }}
       
-        - name: Extract metadata (tags, labels) for Docker
-          id: meta
-          uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-          with:
-            images: ${{ secrets.DOCKERHUB_USERNAME }}/log680repo
+#         - name: Extract metadata (tags, labels) for Docker
+#           id: meta
+#           uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+#           with:
+#             images: ${{ secrets.DOCKERHUB_USERNAME }}/log680repo
       
         - name: Build and push Docker image
           uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
