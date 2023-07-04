@@ -38,10 +38,10 @@ jobs:
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Create the Docker image
-        run: docker build . --file Dockerfile --tag oxygencs:$(date +%s)
+        run: docker build . --file Dockerfile --tag log680repo:$(date +%s)
 
       - name: Docker Push
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/log680repo
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/log680repo:$(date +%s)
 
 # ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_PASSWORD }}:VERSION
 # 
