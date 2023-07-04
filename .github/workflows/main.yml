@@ -13,7 +13,7 @@ env:
 #   T_MAX: ${{ secrets.T_MAX }}
 #   T_MIN: ${{ secrets.T_MIN }}
   IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/log680repo
-  IMAGE_TAG: 1.${{ github.run_number }}
+  IMAGE_TAG: oxygencs-1.${{ github.run_number }}
 
 jobs:
 #   build:
