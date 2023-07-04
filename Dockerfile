@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ubuntu:22.04
+FROM python:latest
 
 # install dependencies
 RUN apt-get update && apt-get install -y python3 python3-pip
@@ -12,14 +12,11 @@ RUN pip install flasgger==0.9.7.1
 RUN pip install pytest==7.3.1
 RUN pip install coverage==7.2.6
 RUN pip install psycopg2-binary==2.9.6
+RUN pip install signalrcore
+RUN pip install python-dotenv
 
 # copy all files of metrics project into the docker file
-COPY app.py /
-COPY api /api
-COPY metrics /metrics
-COPY database /database
+COPY src/main.py /
 
 # run the file
-ENV FLASK_APP=app
-EXPOSE 5000
-CMD flask run --host 0.0.0.0 --port 5000
+CMD [ "python", "-u", "/main.py"]
