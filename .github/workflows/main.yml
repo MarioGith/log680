@@ -34,7 +34,7 @@ jobs:
 #         run: python automatic_testing.py
 
       - name: Create the Docker image
-        run: docker build . --file Dockerfile --tag log680repo:latest
+        run: docker build . --file Dockerfile
 
       - name: docker login
         run: |
