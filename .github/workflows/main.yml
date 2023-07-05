@@ -7,9 +7,9 @@ on:
 
 env:
 #   TOKEN: ${{ secrets.TOKEN }}
-#   HOST: ${{ secrets.HOST }}
+  HOST: ${{ secrets.HOST }}
   OXYGENCS_TOKEN: ${{ secrets.OXYGENCS_TOKEN }}
-#   TICKETS: ${{ secrets.TICKETS }}
+  TICKETS: ${{ secrets.TICKETS }}
 #   T_MAX: ${{ secrets.T_MAX }}
 #   T_MIN: ${{ secrets.T_MIN }}
   DOCKER_IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/log680repo
