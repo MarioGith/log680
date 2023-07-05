@@ -8,19 +8,28 @@ import os
 
 load_dotenv()
 
+
 class Main:
     def __init__(self):
-        token = os.environ.get('OXYGENCS_TOKEN')
+        token = os.environ.get("OXYGENCS_TOKEN")
         if token is None:
             print("TOKEN IS INVALID OR MISSING!")
             exit()
 
         self._hub_connection = None
-        self.HOST = os.environ.get('HOST', default="http://34.95.34.5")  # Setup your host here, configurable par le client
+        self.HOST = os.environ.get(
+            "HOST", default="http://34.95.34.5"
+        )  # Setup your host here, configurable par le client
         self.TOKEN = token  # Setup your token here, configurable par le client
-        self.TICKETS = os.environ.get('TICKETS', default=1)  # Setup your tickets here //cb de fois que ca va repeat
-        self.T_MAX = os.environ.get('T_MAX', default=30)  # Setup your max temperature here, configurable par le client
-        self.T_MIN = os.environ.get('T_MIN', default=15)  # Setup your min temperature here, configurable par le client
+        self.TICKETS = os.environ.get(
+            "TICKETS", default=1
+        )  # Setup your tickets here //cb de fois que ca va repeat
+        self.T_MAX = os.environ.get(
+            "T_MAX", default=30
+        )  # Setup your max temperature here, configurable par le client
+        self.T_MIN = os.environ.get(
+            "T_MIN", default=15
+        )  # Setup your min temperature here, configurable par le client
         self.DATABASE = None  # Setup your database here
 
     def __del__(self):
@@ -57,7 +66,9 @@ class Main:
         self._hub_connection.on("ReceiveSensorData", self.onSensorDataReceived)
         self._hub_connection.on_open(lambda: print("||| Connection opened."))
         self._hub_connection.on_close(lambda: print("||| Connection closed."))
-        self._hub_connection.on_error(lambda data: print(f"||| An exception was thrown closed: {data.error}"))
+        self._hub_connection.on_error(
+            lambda data: print(f"||| An exception was thrown closed: {data.error}")
+        )
 
     def onSensorDataReceived(self, data):
         try:
@@ -83,11 +94,7 @@ class Main:
     def send_event_to_database(self, timestamp, event):
         try:
             # This is not very important
-            print("Hello world!")
 
-
-
-            
             pass
         except requests.exceptions.RequestException as e:
             # To implement
