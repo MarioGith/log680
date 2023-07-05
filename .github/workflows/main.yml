@@ -8,7 +8,7 @@ on:
 env:
 #   TOKEN: ${{ secrets.TOKEN }}
 #   HOST: ${{ secrets.HOST }}
-#   OXYGENCS_TOKEN: ${{ secrets.OXYGENCS_TOKEN }}
+  OXYGENCS_TOKEN: ${{ secrets.OXYGENCS_TOKEN }}
 #   TICKETS: ${{ secrets.TICKETS }}
 #   T_MAX: ${{ secrets.T_MAX }}
 #   T_MIN: ${{ secrets.T_MIN }}
