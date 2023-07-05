@@ -32,6 +32,8 @@ class Main:
         )  # Setup your min temperature here, configurable par le client
         self.DATABASE = None  # Setup your database here
 
+        print("Hello world!")
+
     def __del__(self):
         if self._hub_connection != None:
             self._hub_connection.stop()
