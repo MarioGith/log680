@@ -35,11 +35,9 @@ jobs:
           pip install pre-commit
           pre-commit install
           
-#       - name: Run unit tests
-#         run: |
-#           python -m unittest discover -s unit_testing/metrics/kanban
-#           python -m unittest discover -s unit_testing/metrics/pullrequests
-#           python -m unittest discover -s unit_testing/metrics/pipeline
+      - name: Run unit tests
+        run: |
+          python -m unittest discover -s unit_testing/app
 
       - name: Run Pre-commit hook
         run: |
