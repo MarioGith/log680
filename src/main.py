@@ -83,6 +83,11 @@ class Main:
     def send_event_to_database(self, timestamp, event):
         try:
             # This is not very important
+            print("Hello world!")
+
+
+
+            
             pass
         except requests.exceptions.RequestException as e:
             # To implement
