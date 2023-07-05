@@ -41,9 +41,9 @@ jobs:
 #           python -m unittest discover -s unit_testing/metrics/pullrequests
 #           python -m unittest discover -s unit_testing/metrics/pipeline
 
-#       - name: Run Pre-commit hook
-#         run: |
-#           pre-commit run
+      - name: Run Pre-commit hook
+        run: |
+          pre-commit run
 
   docker_hub:
     name: Push Docker image to Docker Hub
