@@ -6,7 +6,6 @@ on:
       - main
 
 env:
-#   TOKEN: ${{ secrets.TOKEN }}
   HOST: ${{ secrets.HOST }}
   OXYGENCS_TOKEN: ${{ secrets.OXYGENCS_TOKEN }}
   TICKETS: ${{ secrets.TICKETS }}
