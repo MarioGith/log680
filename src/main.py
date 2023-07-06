@@ -19,20 +19,18 @@ class Main:
         self._hub_connection = None
         self.HOST = os.environ.get(
             "HOST", default="http://34.95.34.5"
-        )  # Setup your host here, configurable par le client
-        self.TOKEN = token  # Setup your token here, configurable par le client
-        self.TICKETS = os.environ.get(
-            "TICKETS", default=1
-        )  # Setup your tickets here //cb de fois que ca va repeat
-        self.T_MAX = os.environ.get(
-            "T_MAX", default=30
-        )  # Setup your max temperature here, configurable par le client
-        self.T_MIN = os.environ.get(
-            "T_MIN", default=15
-        )  # Setup your min temperature here, configurable par le client
+        )  # Adresse du host, configurable par le client
+        self.TOKEN = token  # Token pour connexion, configurable par le client
+        self.TICKETS = int(
+            os.environ.get("TICKETS", default=1)
+        )  # combien de fois que ca se repete, configurable par le client
+        self.T_MAX = int(
+            os.environ.get("T_MAX", default=30)
+        )  # Max temperature, configurable par le client
+        self.T_MIN = int(
+            os.environ.get("T_MIN", default=15)
+        )  # Min temperature, configurable par le client
         self.DATABASE = None  # Setup your database here
-
-        print("Hello world!")
 
     def __del__(self):
         if self._hub_connection != None:
@@ -77,7 +75,11 @@ class Main:
             print(data[0]["date"] + " --> " + data[0]["data"])
             date = data[0]["date"]
             dp = float(data[0]["data"])
-            self.send_temperature_to_fastapi(date, dp)
+
+            # To implement for lab 3
+            # self.send_temperature_to_fastapi(date, dp)
+
+            self.send_event_to_database(date, dp)
             self.analyzeDatapoint(date, dp)
         except Exception as err:
             print(err)
@@ -95,11 +97,13 @@ class Main:
 
     def send_event_to_database(self, timestamp, event):
         try:
-            # This is not very important
-
+            # To implement for lab 3
             pass
+            # print("Timestamp: " + timestamp)
+            # print("event: " + str(event))
+
         except requests.exceptions.RequestException as e:
-            # To implement
+            # To implement for lab 3
             pass
 
 
