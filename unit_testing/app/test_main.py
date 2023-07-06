@@ -72,7 +72,9 @@ class TestMain(TestCase):
         except Exception as err:
             self.fail((f"analyzeDatapoint raised an exception: {err}"))
         self.obj.sendActionToHvac.assert_called_once_with(
-            "2023-06-30T19:01:28.2222471+00:00", "TurnOnHeater", "1"
+            "2023-06-30T19:01:28.2222471+00:00",
+            "TurnOnAc",
+            int(os.environ.get("TICKETS")),
         )
 
     def test_set_env_variable(self):
