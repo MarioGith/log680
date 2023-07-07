@@ -5,7 +5,11 @@ import logging
 import requests
 import json
 import time
-from .exceptions import *
+
+
+class NullTokenException(Exception):
+    # raised when token is None
+    pass
 
 DEFAULT_HOST = 'localhost'
 DEFAULT_TOKEN = 'dummy_token'
@@ -87,11 +91,11 @@ class Main:
             self.sendActionToHvac(date, "TurnOnHeater", self.TICKETS)
 
     def sendActionToHvac(self, date, action, nbTick):
-        r = requests.get(f"{self.HOST}/api/hvac/{self.TOKEN}/{action}/{nbTick}")
+        r = requests.get(f"http://{self.HOST}/api/hvac/{self.TOKEN}/{action}/{nbTick}")
         details = json.loads(r.text)
         print(details)
 
-    def send_temperature_to_fastapi(date, dp):
+    def send_temperature_to_fastapi(self, date, dp):
         # to implement
         pass
 

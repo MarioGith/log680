@@ -13,10 +13,9 @@ RUN adduser --system --no-create-home $APP_USER
 RUN apt update
 RUN apt-get --assume-yes install gcc libpq-dev
 
-COPY Pipfile ${APP_PATH}
-COPY Pipfile.lock ${APP_PATH}
-RUN pipenv install
+COPY requirements.txt ${APP_PATH}
+RUN pip install -r requirements.txt
 
 COPY . ${APP_PATH}
 
-CMD pipenv run start
+CMD python src/main.py
