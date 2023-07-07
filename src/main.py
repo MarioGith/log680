@@ -1,19 +1,38 @@
+import os
+
 from signalrcore.hub_connection_builder import HubConnectionBuilder
 import logging
 import requests
 import json
 import time
+from .exceptions import *
 
+DEFAULT_HOST = 'localhost'
+DEFAULT_TOKEN = 'dummy_token'
+DEFAULT_TICKETS = 'dummy_tickets'
+DEFAULT_T_MAX = '0'
+DEFAULT_T_MIN = '0'
+DEFAULT_DATABASE = 'dummy_database'
+DEFAULT_DATABASE_USER = 'dummy_user'
+DEFAULT_DATABASE_PASSWORD = 'dummy_password'
+DEFAULT_DATABASE_HOST = 'localhost'
 
 class Main:
     def __init__(self):
         self._hub_connection = None
-        self.HOST = None  # Setup your host here
-        self.TOKEN = None  # Setup your token here
-        self.TICKETS = None  # Setup your tickets here
-        self.T_MAX = None  # Setup your max temperature here
-        self.T_MIN = None  # Setup your min temperature here
-        self.DATABASE = None  # Setup your database here
+        self.HOST = os.getenv('HOST', DEFAULT_HOST)  # Setup your host here
+        self.TOKEN = os.getenv('TOKEN', None)  # Setup your token here
+        self.TICKETS = os.getenv('TICKETS', DEFAULT_TICKETS)  # Setup your tickets here
+        self.T_MAX = os.getenv('T_MAX', DEFAULT_T_MAX)  # Setup your max temperature here
+        self.T_MIN = os.getenv('T_MIN', DEFAULT_T_MIN)  # Setup your min temperature here
+        self.DATABASE = os.getenv('DATABASE', DEFAULT_DATABASE)  # Setup your database here
+        self.DATABASE_HOST = os.getenv('DATABASE_HOST', DEFAULT_DATABASE_HOST)
+        self.DATABASE_USER = os.getenv('DATABASE_USER', DEFAULT_DATABASE_USER)
+        self.DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD', DEFAULT_DATABASE_PASSWORD)
+
+    def validate_token(self):
+        if self.TOKEN is None:
+            raise NullTokenException('Token is None, must set value')
 
     def __del__(self):
         if self._hub_connection != None:
@@ -33,7 +52,7 @@ class Main:
     def setSensorHub(self):
         self._hub_connection = (
             HubConnectionBuilder()
-            .with_url(f"{self.HOST}/SensorHub?token={self.TOKEN}")
+            .with_url(f"http://{self.HOST}/SensorHub?token={self.TOKEN}")
             .configure_logging(logging.INFO)
             .with_automatic_reconnect(
                 {
@@ -72,6 +91,10 @@ class Main:
         details = json.loads(r.text)
         print(details)
 
+    def send_temperature_to_fastapi(date, dp):
+        # to implement
+        pass
+
     def send_event_to_database(self, timestamp, event):
         try:
             # To implement
@@ -83,4 +106,5 @@ class Main:
 
 if __name__ == "__main__":
     main = Main()
+    main.validate_token()
     main.start()

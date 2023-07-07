@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oxygen-cs-app
+  labels:
+    app: oxygen-cs
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: oxygen-cs
+  template:
+    metadata:
+      labels:
+        app: oxygen-cs
+    spec:
+      volumes:
+      - name: config
+        configMap:
+          name: oxygen-cs-config
+      - name: reload
+        hostPath:
+          path: /local/data
+      containers:
+      - name: oxygen-cs
+        imagePullPolicy: IfNotPresent
+        image: miguelros/oxygen-cs-grp01-eq13:latest
+        env:
+          - name: HOST
+            valueFrom:
+              configMapKeyRef:
+                name: oxygen-cs-config
+                key: host
+          - name: TOKEN
+            valueFrom:
+              configMapKeyRef:
+                name: oxygen-cs-config
+                key: token
+          - name: TICKETS
+            valueFrom:
+              configMapKeyRef:
+                name: oxygen-cs-config
+                key: token
+          - name: tickets
+            valueFrom:
+              configMapKeyRef:
+                name: oxygen-cs-config
+                key: token
+          - name: TOKEN
+            valueFrom:
+              configMapKeyRef:
+                name: oxygen-cs-config
+                key: token
+          - name: T_MAX
+            valueFrom:
+              configMapKeyRef:
+                name: oxygen-cs-config
+                key: t_max
+          - name: T_MIN
+            valueFrom:
+              configMapKeyRef:
+                name: oxygen-cs-config
+                key: t_min
+          - name: DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: oxygen-cs-config
+                key: database
+          - name: DATABASE_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: oxygen-cs-config
+                key: database_host
+          - name: DATABASE_USER
+            valueFrom:
+              configMapKeyRef:
+                name: oxygen-cs-config
+                key: database_user
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: oxygen-cs-config
+                key: database_password
+
+        volumeMounts:
+        - name: reload
+          mountPath: /usr/src/data
+        ports:
+        - containerPort: 8000
