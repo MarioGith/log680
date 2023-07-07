@@ -1,18 +1,35 @@
 from signalrcore.hub_connection_builder import HubConnectionBuilder
+from dotenv import load_dotenv
 import logging
 import requests
 import json
 import time
+import os
+
+load_dotenv()
 
 
 class Main:
     def __init__(self):
+        token = os.environ.get("OXYGENCS_TOKEN")
+        if token is None:
+            print("TOKEN IS INVALID OR MISSING!")
+            exit()
+
         self._hub_connection = None
-        self.HOST = None  # Setup your host here
-        self.TOKEN = None  # Setup your token here
-        self.TICKETS = None  # Setup your tickets here
-        self.T_MAX = None  # Setup your max temperature here
-        self.T_MIN = None  # Setup your min temperature here
+        self.HOST = os.environ.get(
+            "HOST", default="http://34.95.34.5"
+        )  # Adresse du host, configurable par le client
+        self.TOKEN = token  # Token pour connexion, configurable par le client
+        self.TICKETS = int(
+            os.environ.get("TICKETS", default=1)
+        )  # combien de fois que ca se repete, configurable par le client
+        self.T_MAX = int(
+            os.environ.get("T_MAX", default=30)
+        )  # Max temperature, configurable par le client
+        self.T_MIN = int(
+            os.environ.get("T_MIN", default=15)
+        )  # Min temperature, configurable par le client
         self.DATABASE = None  # Setup your database here
 
     def __del__(self):
@@ -49,14 +66,20 @@ class Main:
         self._hub_connection.on("ReceiveSensorData", self.onSensorDataReceived)
         self._hub_connection.on_open(lambda: print("||| Connection opened."))
         self._hub_connection.on_close(lambda: print("||| Connection closed."))
-        self._hub_connection.on_error(lambda data: print(f"||| An exception was thrown closed: {data.error}"))
+        self._hub_connection.on_error(
+            lambda data: print(f"||| An exception was thrown closed: {data.error}")
+        )
 
     def onSensorDataReceived(self, data):
         try:
             print(data[0]["date"] + " --> " + data[0]["data"])
             date = data[0]["date"]
             dp = float(data[0]["data"])
-            self.send_temperature_to_fastapi(date, dp)
+
+            # To implement for lab 3
+            # self.send_temperature_to_fastapi(date, dp)
+
+            self.send_event_to_database(date, dp)
             self.analyzeDatapoint(date, dp)
         except Exception as err:
             print(err)
@@ -74,10 +97,13 @@ class Main:
 
     def send_event_to_database(self, timestamp, event):
         try:
-            # To implement
+            # To implement for lab 3
             pass
+            # print("Timestamp: " + timestamp)
+            # print("event: " + str(event))
+
         except requests.exceptions.RequestException as e:
-            # To implement
+            # To implement for lab 3
             pass
 
 
