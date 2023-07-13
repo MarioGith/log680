@@ -3,16 +3,17 @@ import logging
 import requests
 import json
 import time
+import os
 
 
 class Main:
     def __init__(self):
         self._hub_connection = None
-        self.HOST = None  # Setup your host here
-        self.TOKEN = None  # Setup your token here
-        self.TICKETS = None  # Setup your tickets here
-        self.T_MAX = None  # Setup your max temperature here
-        self.T_MIN = None  # Setup your min temperature here
+        self.HOST = "http://34.95.34.5"  # Setup your host here
+        self.TOKEN = os.environ["TOKEN"]  # Setup your token here
+        self.TICKETS = os.environ.get("TICKETS", 2)  # Setup your tickets here
+        self.T_MAX = os.environ.get("T_MAX", 21)  # Setup your max temperature here
+        self.T_MIN = os.environ.get("T_MIN", 15)  # Setup your min temperature here
         self.DATABASE = None  # Setup your database here
 
     def __del__(self):
@@ -49,14 +50,16 @@ class Main:
         self._hub_connection.on("ReceiveSensorData", self.onSensorDataReceived)
         self._hub_connection.on_open(lambda: print("||| Connection opened."))
         self._hub_connection.on_close(lambda: print("||| Connection closed."))
-        self._hub_connection.on_error(lambda data: print(f"||| An exception was thrown closed: {data.error}"))
+        self._hub_connection.on_error(
+            lambda data: print(f"||| An exception was thrown closed: {data.error}")
+        )
 
     def onSensorDataReceived(self, data):
         try:
             print(data[0]["date"] + " --> " + data[0]["data"])
             date = data[0]["date"]
             dp = float(data[0]["data"])
-            self.send_temperature_to_fastapi(date, dp)
+            #self.send_temperature_to_fastapi(date, dp)
             self.analyzeDatapoint(date, dp)
         except Exception as err:
             print(err)
