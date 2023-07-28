@@ -74,7 +74,7 @@ class Main:
     def send_event_to_database(self, timestamp, event):
         try:
             # Create the connection to the database
-            connection_string = "host=localhost port=5432 dbname=OxygenOS user=postgres password=postgres"
+            connection_string = "host=postgres port=5432 dbname=postgres user=postgres password=postgres"
             connection = psycopg2.connect(connection_string)
 
             # Create a cursor to execute SQL commands
