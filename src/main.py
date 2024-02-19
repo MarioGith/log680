@@ -4,18 +4,22 @@ import requests
 import json
 import time
 
+import os
+
 
 class Main:
     def __init__(self):
         """Setup environment variables and default values."""
         self._hub_connection = None
-        self.HOST = None  # Setup your host here
-        self.TOKEN = None  # Setup your token here
+        self.HOST = os.environ.get('HOST', default=None)  # Setup your host here
+        self.TOKEN = os.environ.get('TOKEN', default=None) # Setup your token here
 
+        # Note: Ne pas se soucier de la variable TICKETS/TICKS et la mettre à 1
         self.TICKETS = 1  # Setup your tickets here
-        self.T_MAX = None  # Setup your max temperature here
-        self.T_MIN = None  # Setup your min temperature here
-        self.DATABASE = None  # Setup your database here
+
+        self.T_MAX = os.environ.get('T_MAX', default=None)  # Setup your max temperature here
+        self.T_MIN = os.environ.get('T_MIN', default=None)  # Setup your min temperature here
+        self.DATABASE = os.environ.get('DATABASE', default=None)  # Setup your database here
 
     def __del__(self):
         if self._hub_connection != None:
